@@ -5,7 +5,8 @@ go 1.15
 require (
 	github.com/BurntSushi/toml v1.3.2 // indirect
 	github.com/go-resty/resty/v2 v2.11.0 // indirect
-	github.com/gogf/gf/v2 v2.5.4
+	github.com/gogf/gf/contrib/drivers/pgsql/v2 v2.6.4
+	github.com/gogf/gf/v2 v2.6.4
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mpcsdk/mpcCommon v0.0.0
 	github.com/stretchr/testify v1.8.4 // indirect

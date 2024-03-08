@@ -2,21 +2,22 @@ package v1
 
 import "github.com/gogf/gf/v2/frame/g"
 
-type FetchTxsReq struct {
-	g.Meta `path:"/FetchTxs" tags:"FetchTxs" method:"get" summary:"You first hello api"`
+type RecentTxsReq struct {
+	g.Meta `path:"/RecentTxs" tags:"RecentTxs" method:"post" summary:"You first hello api"`
 	Token  string `json:"token"`
 }
-type FetchTxsRes struct {
+type RecentTxsRes struct {
 	g.Meta `mime:"text/html" example:"string"`
-	Txs    []string `json:"txs"`
+	Seq    int         `json:"seq"`
+	Data   interface{} `json:"data"`
 }
 
 // //
-type FetchAckReq struct {
-	g.Meta `path:"/FetchAck" tags:"FetchAck" method:"get" summary:"You first hello api"`
+type TxsAckReq struct {
+	g.Meta `path:"/TxsAc" tags:"TxsAc" method:"post" summary:"You first hello api"`
 	Token  string `json:"token"`
-	Seq    string `json:"seq"`
+	Seq    int    `json:"seq"`
 }
-type FetchAckRes struct {
+type TxsAckRes struct {
 	g.Meta `mime:"text/html" example:"string"`
 }

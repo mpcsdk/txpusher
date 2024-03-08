@@ -11,8 +11,8 @@ import (
 )
 
 type IJobV1 interface {
-	FetchTxs(ctx context.Context, req *v1.FetchTxsReq) (res *v1.FetchTxsRes, err error)
-	FetchAck(ctx context.Context, req *v1.FetchAckReq) (res *v1.FetchAckRes, err error)
+	RecentTxs(ctx context.Context, req *v1.RecentTxsReq) (res *v1.RecentTxsRes, err error)
+	TxsAck(ctx context.Context, req *v1.TxsAckReq) (res *v1.TxsAckRes, err error)
 }
 
 

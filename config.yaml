@@ -18,7 +18,7 @@ database:
   default:
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"
     role: "master"
-  - link: "pgsql:postgres:123456@tcp(127.0.0.1:10101)/txs"
+  - link: "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"
     role: "slave"
   transAct:
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10100)/transAct"
@@ -26,7 +26,10 @@ database:
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10101)/transAct"
     role: "slave"
 cache:
-  sessionDuration: 2000
+  apiInterval: 1
+  dbCacheDuration: 100
+
+Duration: 100
 
 nrpc:
   natsUrl: "127.0.0.1:4222"
@@ -42,11 +45,11 @@ redis:
 
 userToken: "https://auth-dev.mixmarvel-sdk.com/info"
 
-txdatarpc: "http://desktopuser:8004"
+txdatarpc: "http://desktopuser:80041"
 
 gfcli:
   gen:
     dao:
     - link:     "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"
-      tables:   "txs"
+      tables:   "chain_stat, job_stat, txs, job_stat_offline,job_offline_txs"
       jsonCase: "CamelLower"

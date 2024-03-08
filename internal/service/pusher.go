@@ -7,27 +7,29 @@ package service
 
 import (
 	"context"
+	"txpusher/internal/model/entity"
 )
 
 type (
-	IJob interface {
-		FetchMsg(ctx context.Context, userId string) (int, []*item)
+	IPusher interface {
+		GetRecentMsg(ctx context.Context, userId string, addr string) (int, []*entity.Txs)
 		// /
 		Ack(ctx context.Context, userId string, seqId int) error
+		PushTxs(ctx context.Context, chainId string, txs []*entity.Txs)
 	}
 )
 
 var (
-	localJob IJob
+	localPusher IPusher
 )
 
-func Job() IJob {
-	if localJob == nil {
-		panic("implement not found for interface IJob, forgot register?")
+func Pusher() IPusher {
+	if localPusher == nil {
+		panic("implement not found for interface IPusher, forgot register?")
 	}
-	return localJob
+	return localPusher
 }
 
-func RegisterJob(i IJob) {
-	localJob = i
+func RegisterPusher(i IPusher) {
+	localPusher = i
 }

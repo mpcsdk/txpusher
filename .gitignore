@@ -18,3 +18,5 @@ temp.yaml
 bin
 **/config/config.yaml
 txpusher
+*.log
+__debug_*

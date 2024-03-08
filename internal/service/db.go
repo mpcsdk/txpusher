@@ -7,13 +7,19 @@ package service
 
 import (
 	"context"
+	"txpusher/internal/model/entity"
 )
 
 type (
 	IDB interface {
-		FetchJobStatus(ctx context.Context, userId string) (int, error)
-		UpJobStatus(ctx context.Context, userId string, seqId string) error
-		FetchTxsBySeqId(ctx context.Context, seqId string) []string
+		GetOfflineMsg(ctx context.Context, userId string) ([]*entity.Txs, error)
+		InsertOfflineMsg(ctx context.Context, userId string, tx *entity.Txs) error
+		DeleteOfflineMsg(ctx context.Context, userId string, chainId string, latestNr int) error
+		GetChainStat(ctx context.Context) ([]*entity.ChainStat, error)
+		UpChainStat(ctx context.Context, chainId string, latestNr int) error
+		// /
+		InsertTxs(ctx context.Context, txs []*entity.Txs) error
+		GetTxs(ctx context.Context, chainId string, blockNumber int, userId string) ([]*entity.Txs, error)
 	}
 )
 
