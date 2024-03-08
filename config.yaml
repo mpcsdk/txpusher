@@ -14,6 +14,8 @@ logger:
   rotateExpire: "1d"
   path: "./"
 
+userTokenUrl: "https://auth-dev.mixmarvel-sdk.com/info"
+
 database:
   default:
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"

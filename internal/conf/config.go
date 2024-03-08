@@ -24,11 +24,12 @@ type Nrpcfg struct {
 
 // //
 type Cfg struct {
-	Server    *Server `json:"server" v:"required"`
-	Cache     *Cache  `json:"cache" v:"required"`
-	JaegerUrl string  `json:"jaegerUrl" v:"required"`
-	Nrpc      *Nrpcfg `json:"nrpc" v:"required"`
-	Txdatarpc string  `json:"txdatarpc" v:"required"`
+	Server       *Server `json:"server" v:"required"`
+	Cache        *Cache  `json:"cache" v:"required"`
+	JaegerUrl    string  `json:"jaegerUrl" v:"required"`
+	Nrpc         *Nrpcfg `json:"nrpc" v:"required"`
+	Txdatarpc    string  `json:"txdatarpc" v:"required"`
+	UserTokenUrl string  `json:"userTokenUrl" v:"required"`
 }
 
 var Config = &Cfg{}
