@@ -12,6 +12,8 @@ import (
 
 type (
 	IDB interface {
+		GetContractRule(ctx context.Context, chainId string, address string, flush bool) (*entity.Contractrule, error)
+		GetContractRuleBriefs(ctx context.Context, chainId string, kind string) ([]*entity.Contractrule, error)
 		GetOfflineMsg(ctx context.Context, userId string) ([]*entity.Txs, error)
 		InsertOfflineMsg(ctx context.Context, userId string, tx *entity.Txs) error
 		DeleteOfflineMsg(ctx context.Context, userId string, chainId string, latestNr int) error

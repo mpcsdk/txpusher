@@ -2,10 +2,13 @@ package txsync
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 	"txpusher/internal/conf"
 	"txpusher/internal/model/pushermod"
 	"txpusher/internal/service"
+
+	"github.com/mpcsdk/mpcCommon/mq"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -16,6 +19,10 @@ type sTxSync struct {
 
 	///
 	chainStat map[string]int
+	///
+	natsmq *mq.NatsServer
+	//
+	contractChain map[string]string
 }
 
 // //
@@ -99,8 +106,9 @@ func (s *sTxSync) run() {
 
 func new() *sTxSync {
 	s := &sTxSync{
-		ctx:       gctx.GetInitCtx(),
-		chainStat: map[string]int{},
+		ctx:           gctx.GetInitCtx(),
+		chainStat:     map[string]int{},
+		contractChain: map[string]string{},
 	}
 
 	//
@@ -118,6 +126,26 @@ func new() *sTxSync {
 			s.chainStat[chainid] = latestNr
 		}
 	}
+	///sync contract
+	brief, err := service.DB().GetContractRuleBriefs(s.ctx, "", "")
+	if err != nil {
+		panic(err)
+	}
+	for _, b := range brief {
+		s.contractChain[b.ContractAddress] = b.ChainId
+	}
+	///notify contractrule
+	s.natsmq = mq.New(conf.Config.Nrpc.NatsUrl)
+	s.natsmq.NatsSubscribe(mq.Sub_ContractRule, func(data []byte) error {
+		msg := &mq.ContractRuleReq{}
+		err := json.Unmarshal(data, msg)
+		if err != nil {
+			return err
+		}
+		///
+		return nil
+	})
+	///
 	s.run()
 	return s
 }

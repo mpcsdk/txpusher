@@ -15,7 +15,8 @@ logger:
   path: "./"
 
 userTokenUrl: "https://auth-dev.mixmarvel-sdk.com/info"
-
+nrpc:
+  natsUrl: "127.0.0.1:4222,127.0.0.1:4211"
 database:
   default:
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"
@@ -27,14 +28,15 @@ database:
     role: "master"
   - link: "pgsql:postgres:123456@tcp(127.0.0.1:10101)/transAct"
     role: "slave"
+  riskcontrol:
+  - link: "mysql:ssh:123456@tcp(127.0.0.1:3305)/riskcontrol"
+
 cache:
   apiInterval: 1
   dbCacheDuration: 100
 
 Duration: 100
 
-nrpc:
-  natsUrl: "127.0.0.1:4222"
 
 # redis 
 redis:
@@ -55,3 +57,14 @@ gfcli:
     - link:     "pgsql:postgres:123456@tcp(127.0.0.1:10100)/txs"
       tables:   "chain_stat, job_stat, txs, job_stat_offline,job_offline_txs"
       jsonCase: "CamelLower"
+    - link: "mysql:ssh:123456@tcp(127.0.0.1:3305)/riskcontrol"
+      group: riskcontrol 
+      tables: "contractrule"
+      jsonCase: "CamelLower"
+      typeMapping:
+        decimal:
+          type: decimal.Decimal
+          import: github.com/shopspring/decimal
+        numeric:
+          type: decimal.Decimal
+          import: github.com/shopspring/decimal

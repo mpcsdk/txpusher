@@ -5,8 +5,16 @@
 
 package service
 
+import (
+	"context"
+
+	"github.com/mpcsdk/mpcCommon/mq"
+)
+
 type (
-	ITxSync interface{}
+	ITxSync interface {
+		NotifyContractRule(ctx context.Context, req *mq.ContractRuleReq) error
+	}
 )
 
 var (
